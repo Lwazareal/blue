@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thumbnails</title>
+    <meta name="description" content="Designer thumbnail gallery">
+    <meta name="author" content="John Doe">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --color-background: #121212;
+            --color-surface: #1E1E1E;
+            --color-primary: #3B82F6;
+            --color-text: #FFFFFF;
+            --color-text-secondary: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <header class="hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>
+                        <span class="greeting">Hi, I'm</span>
+                        <span class="name" v-text="config.authorName"></span>
+                    </h1>
+                    <div class="dynamic-text">Thumbnails
+                        <span class="changing-text" v-text="currentText"></span>
+                    </div>
+                    <p class="bio" v-text="config.heroBio"></p>
+
+                    <div style="display:flex; gap: 12px; flex-wrap: wrap;">
+                        <a class="cta-button" :href="'index.html'" v-text="'Back to Portfolio'" ></a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img :src="config.authorImage" :alt="config.authorName" width="400" height="400" loading="eager">
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <h2 class="visually-hidden">Thumbnail Designs</h2>
+            <thumbnail-grid :items="items"></thumbnail-grid>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Get in Touch</h3>
+                    <a :href="'mailto:' + config.authorEmail" v-text="config.authorEmail"></a>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Me</h3>
+                    <div class="social-links">
+                        <a :href="config.socialLinks.instagram" class="social-link"
+                            aria-label="Follow on Instagram">Instagram</a>
+                        <a :href="config.socialLinks.behance" class="social-link"
+                            aria-label="Follow on Behance">Behance</a>
+                        <a :href="config.socialLinks.linkedin" class="social-link"
+                            aria-label="Connect on LinkedIn">LinkedIn</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <p class="copyright">© {{ currentYear }} {{ config.authorName }}. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="public-config.js"></script>
+    <script src="thumbnails.js"></script>
+
+    <script>
+        // Minimal page bootstrap (keeps same look/navigation/colors as index.html)
+        (function () {
+            var cfg = window.__PORTFOLIO_CONFIG__ || {};
+            var items = window.__PORTFOLIO_THUMBNAILS__ || [];
+
+            Vue.component('thumbnail-grid', {
+                props: ['items'],
+                template: `
+                    <div class="row">
+                        <div class="column" v-for="(item, index) in items" :key="index">
+                            <div class="image-container">
+                                <a :href="item.href || item.src" target="_blank" rel="noopener noreferrer" style="display:block;"> 
+<img :src="item.thumbSrc" :alt="item.alt || item.title || 'Thumbnail design'" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `
+            });
+
+            new Vue({
+                el: '#app',
+                data: {
+                    config: cfg,
+                    items: items,
+                    currentText: '',
+                    currentYear: new Date().getFullYear()
+                },
+                mounted: function () {
+                    document.title = 'Thumbnails';
+
+                    var desc = document.querySelector('meta[name="description"]');
+                    if (desc && this.config.siteDescription) desc.setAttribute('content', this.config.siteDescription);
+
+                    var author = document.querySelector('meta[name="author"]');
+                    if (author && this.config.authorName) author.setAttribute('content', this.config.authorName);
+
+                    this.startTextAnimation();
+                },
+                methods: {
+                    startTextAnimation: function () {
+                        if (!this.config.heroTexts || !this.config.heroTexts.length) {
+                            this.currentText = 'Design';
+                            return;
+                        }
+                        var index = 0;
+                        this.currentText = this.config.heroTexts[0];
+                        setInterval(() => {
+                            index = (index + 1) % this.config.heroTexts.length;
+                            this.currentText = this.config.heroTexts[index];
+                        }, 3000);
+                    }
+                }
+            });
+        })();
+    </script>
+</body>
+
+</html>
+
