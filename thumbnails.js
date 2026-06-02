@@ -14,6 +14,7 @@ window.__PORTFOLIO_THUMBNAILS__ = [
   { thumbSrc: 'museveni again.jpg' },
   { thumbSrc: 'WHY PHONES ARE SO EXPENSIVE!.jpg'},
     { thumbSrc: 'state exposed.jpg'},
+  { thumbSrc: 'Gachagua issues warning.jpeg'},
 
 ];
 
