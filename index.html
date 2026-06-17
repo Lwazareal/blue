@@ -1,446 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creative Portfolio - Professional Developer & Designer</title>
-    <meta name="description" content="Explore creative digital solutions and innovative projects">
-    <meta name="author" content="Creative Developer">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%233B82F6'>💻</text></svg>">
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Three.js for 3D -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    
-    <!-- GSAP for animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
-    <!-- Lenis for smooth scroll -->
-    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-    
+    <title>Portfolio</title>
+    <meta name="description" content="Professional Designer Portfolio">
+    <meta name="author" content="John Doe">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <span class="logo-text">Dev</span>
-                <span class="logo-dot"></span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#hero" class="nav-link">Home</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-            <button class="menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
+    <style>
+      :root {
+        --color-background: #121212;
+        --color-surface: #1E1E1E;
+        --color-primary: #3B82F6;
+        --color-text: #FFFFFF;
+        --color-text-secondary: rgba(255, 255, 255, 0.7);
+      }
+    </style>
 
-    <!-- Hero Section with 3D -->
-    <section id="hero" class="hero">
-        <div class="hero-container">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <header class="hero">
             <div class="hero-content">
                 <div class="hero-text">
-                    <div class="hero-greeting">Welcome to my creative space</div>
-                    <h1 class="hero-title">
-                        <span class="word">
-                            <span class="letter">C</span>
-                            <span class="letter">r</span>
-                            <span class="letter">a</span>
-                            <span class="letter">f</span>
-                            <span class="letter">t</span>
-                            <span class="letter">i</span>
-                            <span class="letter">n</span>
-                            <span class="letter">g</span>
-                        </span>
-                        <span class="word">
-                            <span class="letter">D</span>
-                            <span class="letter">i</span>
-                            <span class="letter">g</span>
-                            <span class="letter">i</span>
-                            <span class="letter">t</span>
-                            <span class="letter">a</span>
-                            <span class="letter">l</span>
-                        </span>
-                        <span class="word">
-                            <span class="letter">E</span>
-                            <span class="letter">x</span>
-                            <span class="letter">p</span>
-                            <span class="letter">e</span>
-                            <span class="letter">r</span>
-                            <span class="letter">i</span>
-                            <span class="letter">e</span>
-                            <span class="letter">n</span>
-                            <span class="letter">c</span>
-                            <span class="letter">e</span>
-                            <span class="letter">s</span>
-                        </span>
+                    <h1>
+                        <span class="greeting">Hi, I'm</span>
+                        <span class="name" v-text="config.authorName"></span>
                     </h1>
-                    <p class="hero-subtitle">Full-stack developer creating beautiful, interactive web experiences with cutting-edge technologies</p>
-                    <div class="hero-buttons">
-                        <a href="#projects" class="btn btn-primary">View My Work</a>
-                        <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+                    <div class="dynamic-text">I'm a
+                        <span class="changing-text" v-text="currentText"></span>
                     </div>
+                    <p class="bio" v-text="config.heroBio"></p>
+                    <a class="cta-button" :href="config.ctaButton.link" target="_blank" v-text="config.ctaButton.text"></a>
+                    <a class="cta-button" href="thumbnails.html" style="margin-left: 12px;" v-text="'Thumbnails'" ></a>
+
+
                 </div>
-                <div class="hero-3d-container">
-                    <canvas id="heroCanvas"></canvas>
+                <div class="hero-image">
+                    <img :src="config.authorImage" :alt="config.authorName" width="400" height="400" loading="eager">
                 </div>
             </div>
-        </div>
-        
-        <!-- Animated scroll indicator -->
-        <div class="scroll-indicator">
-            <span>Scroll to explore</span>
-            <div class="scroll-mouse">
-                <div class="scroll-wheel"></div>
-            </div>
-        </div>
-    </section>
+        </header>
 
-    <!-- Floating Elements Background -->
-    <div class="floating-elements">
-        <div class="float-elem elem-1"></div>
-        <div class="float-elem elem-2"></div>
-        <div class="float-elem elem-3"></div>
-        <div class="float-elem elem-4"></div>
-    </div>
+        <main>
+            <h2 class="visually-hidden">Portfolio Projects</h2>
+            <image-grid :images="images"></image-grid>
+        </main>
 
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="section-header">
-            <h2 class="section-title">Featured Projects</h2>
-            <p class="section-subtitle">Explore my latest work showcasing creativity and technical excellence</p>
-        </div>
-
-        <div class="projects-grid">
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=500&fit=crop" alt="E-Commerce Platform">
-                    <div class="project-overlay">
-                        <span class="view-btn">View Project</span>
-                    </div>
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Get in Touch</h3>
+                    <a :href="'mailto:' + config.authorEmail" v-text="config.authorEmail"></a>
                 </div>
-                <div class="project-info">
-                    <h3>E-Commerce Platform</h3>
-                    <p>Next.js, React, Stripe, PostgreSQL</p>
-                    <div class="project-tags">
-                        <span class="tag">React</span>
-                        <span class="tag">Payment</span>
-                        <span class="tag">Database</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="https://images.unsplash.com/photo-1633356122544-f134324ef6db?w=500&h=500&fit=crop" alt="AI Chat App">
-                    <div class="project-overlay">
-                        <span class="view-btn">View Project</span>
-                    </div>
-                </div>
-                <div class="project-info">
-                    <h3>AI Chat Application</h3>
-                    <p>Vue.js, OpenAI API, WebSockets, Redis</p>
-                    <div class="project-tags">
-                        <span class="tag">AI</span>
-                        <span class="tag">Real-time</span>
-                        <span class="tag">Vue</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="https://images.unsplash.com/photo-1460925895917-adf4e565db18?w=500&h=500&fit=crop" alt="Analytics Dashboard">
-                    <div class="project-overlay">
-                        <span class="view-btn">View Project</span>
-                    </div>
-                </div>
-                <div class="project-info">
-                    <h3>Analytics Dashboard</h3>
-                    <p>D3.js, TypeScript, Real-time Data</p>
-                    <div class="project-tags">
-                        <span class="tag">Data Viz</span>
-                        <span class="tag">TypeScript</span>
-                        <span class="tag">D3</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=500&h=500&fit=crop" alt="3D Portfolio">
-                    <div class="project-overlay">
-                        <span class="view-btn">View Project</span>
-                    </div>
-                </div>
-                <div class="project-info">
-                    <h3>3D Portfolio Site</h3>
-                    <p>Three.js, GSAP, WebGL</p>
-                    <div class="project-tags">
-                        <span class="tag">3D</span>
-                        <span class="tag">Three.js</span>
-                        <span class="tag">Animation</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=500&h=500&fit=crop" alt="Mobile App">
-                    <div class="project-overlay">
-                        <span class="view-btn">View Project</span>
-                    </div>
-                </div>
-                <div class="project-info">
-                    <h3>Fitness Tracking App</h3>
-                    <p>React Native, Firebase, Stripe</p>
-                    <div class="project-tags">
-                        <span class="tag">Mobile</span>
-                        <span class="tag">Firebase</span>
-                        <span class="tag">Native</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=500&fit=crop" alt="Design System">
-                    <div class="project-overlay">
-                        <span class="view-btn">View Project</span>
-                    </div>
-                </div>
-                <div class="project-info">
-                    <h3>Design System</h3>
-                    <p>Storybook, Component Library, CSS</p>
-                    <div class="project-tags">
-                        <span class="tag">Components</span>
-                        <span class="tag">Design</span>
-                        <span class="tag">System</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <div class="section-header">
-            <h2 class="section-title">Skills & Expertise</h2>
-            <p class="section-subtitle">Technologies and tools I work with</p>
-        </div>
-
-        <div class="skills-container">
-            <div class="skill-category">
-                <h3>Frontend</h3>
-                <div class="skill-items">
-                    <div class="skill-item" data-skill="React">
-                        <div class="skill-bar">
-                            <div class="skill-fill" style="width: 95%"></div>
-                        </div>
-                        <span>React</span>
-                    </div>
-                    <div class="skill-item" data-skill="Vue">
-                        <div class="skill-bar">
-                            <div class="skill-fill" style="width: 88%"></div>
-                        </div>
-                        <span>Vue.js</span>
-                    </div>
-                    <div class="skill-item" data-skill="TypeScript">
-                        <div class="skill-bar">
-                            <div class="skill-fill" style="width: 92%"></div>
-                        </div>
-                        <span>TypeScript</span>
-                    </div>
-                    <div class="skill-item" data-skill="Tailwind">
-                        <div class="skill-bar">
-                            <div class="skill-fill" style="width: 90%"></div>
-                        </div>
-                        <span>Tailwind CSS</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="skill-category">
-                <h3>Backend</h3>
-                <div class="skill-items">
-                    <div class="skill-item" data-skill="Node">
-                        <div class="skill-bar">
-                            <div class="skill-fill" style="width: 90%"></div>
-                        </div>
-                        <span>Node.js</span>
-                    </div>
-                    <div class="skill-item" data-skill="Python">
-                        <div class="skill-bar">
-                            <div class="skill-fill" style="width: 85%"></div>
-                        </div>
-                        <span>Python</span>
-                    </div>
-                    <div class="skill-item" data-skill="PostgreSQL">
-                        <div class="skill-bar">
-                            <div class="skill-fill" style="width: 88%"></div>
-                        </div>
-                        <span>PostgreSQL</span>
-                    </div>
-                    <div class="skill-item" data-skill="Firebase">
-                        <div class="skill-bar">
-                            <div class="skill-fill" style="width: 87%"></div>
-                        </div>
-                        <span>Firebase</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="skill-category">
-                <h3>Design & 3D</h3>
-                <div class="skill-items">
-                    <div class="skill-item" data-skill="Three">
-                        <div class="skill-bar">
-                            <div class="skill-fill" style="width: 85%"></div>
-                        </div>
-                        <span>Three.js</span>
-                    </div>
-                    <div class="skill-item" data-skill="GSAP">
-                        <div class="skill-bar">
-                            <div class="skill-fill" style="width: 92%"></div>
-                        </div>
-                        <span>GSAP</span>
-                    </div>
-                    <div class="skill-item" data-skill="WebGL">
-                        <div class="skill-bar">
-                            <div class="skill-fill" style="width: 80%"></div>
-                        </div>
-                        <span>WebGL</span>
-                    </div>
-                    <div class="skill-item" data-skill="Figma">
-                        <div class="skill-bar">
-                            <div class="skill-fill" style="width: 89%"></div>
-                        </div>
-                        <span>Figma</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section with Parallax -->
-    <section class="testimonials">
-        <div class="section-header">
-            <h2 class="section-title">What Others Say</h2>
-        </div>
-
-        <div class="testimonials-container">
-            <div class="testimonial-card">
-                <div class="stars">
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                </div>
-                <p class="testimonial-text">"Exceptional developer with a keen eye for design. Delivered exactly what we needed and more."</p>
-                <div class="testimonial-author">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=50&h=50&fit=crop" alt="Alex">
-                    <div>
-                        <strong>Alex Chen</strong>
-                        <span>CEO, TechStartup</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card">
-                <div class="stars">
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                </div>
-                <p class="testimonial-text">"Professional, reliable, and incredibly talented. Would definitely work together again!"</p>
-                <div class="testimonial-author">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop" alt="Sarah">
-                    <div>
-                        <strong>Sarah Johnson</strong>
-                        <span>Product Manager, DesignCo</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card">
-                <div class="stars">
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                </div>
-                <p class="testimonial-text">"Outstanding work on our 3D web experience. Truly next-level innovation."</p>
-                <div class="testimonial-author">
-                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=50&h=50&fit=crop" alt="Mike">
-                    <div>
-                        <strong>Mike Rodriguez</strong>
-                        <span>CTO, WebInnovate</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="section-header">
-            <h2 class="section-title">Let's Create Something Amazing</h2>
-            <p class="section-subtitle">Ready to bring your vision to life?</p>
-        </div>
-
-        <div class="contact-container">
-            <form class="contact-form">
-                <div class="form-group">
-                    <input type="text" placeholder="Your Name" required>
-                    <div class="input-border"></div>
-                </div>
-                <div class="form-group">
-                    <input type="email" placeholder="Your Email" required>
-                    <div class="input-border"></div>
-                </div>
-                <div class="form-group">
-                    <textarea placeholder="Your Message" rows="5" required></textarea>
-                    <div class="input-border"></div>
-                </div>
-                <button type="submit" class="btn btn-primary">Send Message</button>
-            </form>
-
-            <div class="contact-info">
-                <div class="contact-item">
-                    <h4>Email</h4>
-                    <a href="mailto:hello@example.com">hello@example.com</a>
-                </div>
-                <div class="contact-item">
-                    <h4>Location</h4>
-                    <p>San Francisco, CA</p>
-                </div>
-                <div class="contact-item">
-                    <h4>Social</h4>
+                <div class="footer-section">
+                    <h3>Follow Me</h3>
                     <div class="social-links">
-                        <a href="#" class="social-icon">LinkedIn</a>
-                        <a href="#" class="social-icon">GitHub</a>
-                        <a href="#" class="social-icon">Twitter</a>
+                        <a :href="config.socialLinks.instagram" class="social-link"
+                            aria-label="Follow on Instagram">Instagram</a>
+                        <a :href="config.socialLinks.behance" class="social-link"
+                            aria-label="Follow on Behance">Behance</a>
+                        <a :href="config.socialLinks.linkedin" class="social-link"
+                            aria-label="Connect on LinkedIn">LinkedIn</a>
                     </div>
                 </div>
+                <div class="footer-section">
+                    <p class="copyright">© {{ currentYear }} {{ config.authorName }}. All rights reserved.</p>
+                </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <p>&copy; 2024 Creative Developer. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="#">Privacy</a>
-                <a href="#">Terms</a>
-                <a href="#">Sitemap</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="script.js"></script>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="public-config.js"></script>
+    <script src="public-images.js"></script>
+    <script src="public.js"></script>
 </body>
 </html>
