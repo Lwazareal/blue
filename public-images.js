@@ -6,7 +6,7 @@ window.__PORTFOLIO_IMAGES__ = [
   { type: "image", src: "Photography Videography.png", alt: "Author image" },
   { type: "image", src: "creative minds (1).jpeg", alt: "Author image" },
   { type: "image", src: "FEASSA - Copy.png", alt: " " },
-  { type: "image", src: "samosa world.png", alt: "sasasa 3" },
+  { type: "image", src: "Samosa World.png", alt: "sasasa 3" },
   { type: "image", src: "LIQUOR 1.png", alt: "Author image" },
   { type: "image", src: "LIQUOR 2.png", alt: "sample 2" },
   { type: "image", src: "Maridadi Mockup.png", alt: "Author image" },
